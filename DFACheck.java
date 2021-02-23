@@ -11,7 +11,7 @@ public class DFACheck {
         } else if (args.length == 1) {
             System.err.println("DFACheck: Invalid Usage - The program must be given two files as input");
         } else {
-
+            boolean validFirstArg = true;
             Q setOfStates = new Q();
 
             try {
@@ -63,38 +63,43 @@ public class DFACheck {
                             }
                             break;
                     }
-                    if (tupleElement > 5) break;
+                    if (tupleElement > 5)
+                        break;
                 }
             } catch (FileNotFoundException e) {
                 System.err.println("DFACheck: The file " + args[0] + " could not be found");
+                validFirstArg = false;
             } catch (IOException e) {
                 System.err.println("DFACheck: The file " + args[0] + " could not be opened");
+                validFirstArg = false;
             }
 
-            try {
+            if (validFirstArg) {
+                try {
 
-                List<String> fileStream = Files.readAllLines(Paths.get(args[1]));
-                int noOfLines = fileStream.size();
+                    List<String> fileStream = Files.readAllLines(Paths.get(args[1]));
+                    int noOfLines = fileStream.size();
 
-                DFA dfaArr[] = new DFA[noOfLines];
-                int index = 0;
+                    DFA dfaArr[] = new DFA[noOfLines];
+                    int index = 0;
 
-                for (String string : fileStream) {
-                    dfaArr[index] = new DFA(string, setOfStates);
-                    System.out.print(string + " ");
+                    for (String string : fileStream) {
+                        dfaArr[index] = new DFA(string, setOfStates);
+                        System.out.print(string + " ");
 
-                    if (dfaArr[index].getAcceptability()) {
-                        System.out.println("accepted");
-                    } else {
-                        System.out.println("rejected");
+                        if (dfaArr[index].getAcceptability()) {
+                            System.out.println("accepted");
+                        } else {
+                            System.out.println("rejected");
+                        }
+
+                        index++;
                     }
-
-                    index++;
+                } catch (FileNotFoundException e) {
+                    System.err.println("DFACheck: The file " + args[1] + " could not be found");
+                } catch (IOException e) {
+                    System.err.println("DFACheck: The file " + args[1] + " could not be opened");
                 }
-            } catch (FileNotFoundException e) {
-                System.err.println("DFACheck: The file " + args[1] + " could not be found");
-            } catch (IOException e) {
-                System.err.println("DFACheck: The file " + args[1] + " could not be opened");
             }
         }
     }

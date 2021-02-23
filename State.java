@@ -5,7 +5,7 @@ public class State {
     private boolean isFinalState = false;
     private String identifier;
 
-    public State(String identifier){
+    public State(String identifier) {
         this.identifier = identifier;
     }
 
@@ -13,19 +13,19 @@ public class State {
         return identifier;
     }
 
-    public boolean isFinalState(){
+    public boolean isFinalState() {
         return isFinalState;
     }
 
-    public void setFinalState(){
+    public void setFinalState() {
         isFinalState = true;
     }
 
-    public State getTransition(Character symbol){
+    public State getTransition(Character symbol) {
         return transitionMap.get(symbol);
     }
 
-    public void setTransition(Character symbol, State forwardState){
+    public void setTransition(Character symbol, State forwardState) {
         transitionMap.put(symbol, forwardState);
     }
 }
